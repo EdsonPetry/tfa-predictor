@@ -1,6 +1,6 @@
-from utils.HyperParameters import HyperParameters
+from base.HyperParameters import HyperParameters
 
-class Trainer(HyperParameters):
+class BaseTrainer(HyperParameters):
     """The base class for training models with data."""
     def __init__(self, max_epochs, num_gpus=0, gradient_clip_val=0):
         self.save_hyperparameters()

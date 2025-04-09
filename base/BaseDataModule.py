@@ -1,7 +1,7 @@
-from base.HyperParameters import HyperParameters
+from utils.HyperParameters import HyperParameters
 
 
-class DataModule(HyperParameters):
+class BaseDataModule(HyperParameters):
     """The base class of data."""
 
     def __init__(self, root="../data", num_workers=4):
