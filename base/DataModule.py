@@ -1,4 +1,4 @@
-from utils.HyperParameters import HyperParameters
+from base.HyperParameters import HyperParameters
 
 
 class DataModule(HyperParameters):

@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from utils.HyperParameters import HyperParameters
+from base.HyperParameters import HyperParameters
 
 class Module(nn.Module, HyperParameters):
     """The base class of models."""
