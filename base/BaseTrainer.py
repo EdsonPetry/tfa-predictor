@@ -1,4 +1,4 @@
-from base.HyperParameters import HyperParameters
+from utils.HyperParameters import HyperParameters
 
 class BaseTrainer(HyperParameters):
     """The base class for training models with data."""
