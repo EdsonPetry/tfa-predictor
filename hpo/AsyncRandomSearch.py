@@ -188,8 +188,10 @@ class AsyncRandomSearch(HPOSearcher):
         self.logger.info(f"Restored {len(self.completed_trials)} completed trials")
         self.logger.info(f"Best error so far: {self.best_error}")
     
+    
+    
     def _submit_job(self, config, job_script_template):
-        """Submit a job to the SLURM scheduler.
+        """Submit a job locally (SLURM bypass for local testing).
         
         Args:
             config (dict): Configuration to evaluate
@@ -210,27 +212,11 @@ class AsyncRandomSearch(HPOSearcher):
         with open(config_path, 'w') as f:
             json.dump(config, f, indent=2)
         
-        # Create job script
-        job_script = job_script_template.format(
-            trial_id=trial_id,
-            config_path=config_path,
-            output_dir=self.output_dir
-        )
+        # Run the job directly instead of submitting to SLURM
+        import subprocess
+        import uuid
         
-        job_script_path = os.path.join(job_dir, 'job.sh')
-        with open(job_script_path, 'w') as f:
-            f.write(job_script)
-        
-        # Submit job
-        proc = subprocess.run(
-            ['sbatch', job_script_path],
-            check=True,
-            stdout=subprocess.PIPE,
-            text=True
-        )
-        
-        # Extract job ID from sbatch output
-        job_id = proc.stdout.strip().split()[-1]
+        job_id = str(uuid.uuid4())
         
         # Record job info
         self.active_jobs[job_id] = {
@@ -240,32 +226,39 @@ class AsyncRandomSearch(HPOSearcher):
             'job_dir': job_dir
         }
         
-        self.logger.info(f"Submitted job {job_id} for trial {trial_id}")
+        # Run the job in a separate process
+        cmd = f"python -m hpo.run_trial --config {config_path} --output {self.output_dir}/jobs/trial_{trial_id}/results.json"
+        
+        # Run in background (this is just for demonstration - in practice, you'd want a more robust solution)
+        subprocess.Popen(cmd, shell=True)
+        
+        self.logger.info(f"Started local job {job_id} for trial {trial_id}")
         
         return job_id
+
+
+    
     
     def _check_job_status(self, job_id):
-        """Check the status of a SLURM job.
+        """Check if job results exist (local version).
         
         Args:
-            job_id (str): SLURM job ID
+            job_id (str): Job ID
         
         Returns:
-            str: Job status (RUNNING, COMPLETED, FAILED, etc.)
+            str: Job status
         """
-        try:
-            proc = subprocess.run(
-                ['sacct', '-j', job_id, '--format=State', '--noheader', '--parsable2'],
-                check=True,
-                stdout=subprocess.PIPE,
-                text=True
-            )
-            
-            status = proc.stdout.strip().split('\n')[0]
-            return status
-        except subprocess.CalledProcessError:
-            self.logger.error(f"Failed to check status for job {job_id}")
-            return "UNKNOWN"
+        job_info = self.active_jobs[job_id]
+        results_path = os.path.join(job_info['job_dir'], 'results.json')
+        
+        if os.path.exists(results_path):
+            return "COMPLETED"
+        else:
+            # Wait a bit before checking again
+            import time
+            time.sleep(0.5)
+            return "RUNNING"
+
     
     def _process_completed_job(self, job_id):
         """Process results from a completed job.

@@ -48,9 +48,9 @@ def get_slurm_config():
 def get_hpo_config():
     """Define the configuration for the HPO campaign."""
     return {
-        'n_trials': 100,                   # Total number of trials to run
-        'max_concurrent_jobs': 8,          # Maximum concurrent jobs
+        'n_trials': 3,                     # Reduced trials for local testing
+        'max_concurrent_jobs': 2,          # Reduced concurrent jobs for local testing
         'output_dir': os.path.join('hpo_results', 'mlp'),  # Results directory
-        'checkpoint_interval': 5,          # Save checkpoint every 5 trials
+        'checkpoint_interval': 1,          # Save checkpoint after each trial
         'seed': 42,                        # Random seed for reproducibility
     }
