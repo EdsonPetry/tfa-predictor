@@ -6,7 +6,7 @@
 #SBATCH --job-name=hpo_manager
 #SBATCH --output=hpo_manager_%j.out
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --mail-user=your.email@rutgers.edu
+#SBATCH --mail-user=elp95@rutgers.edu
 
 # This script serves as the main entry point for running an HPO campaign
 # on the Amarel cluster. It starts a manager process that submits
@@ -25,7 +25,7 @@ module load anaconda3/2021.11
 source activate tfa-predictor
 
 # Set up environment variables
-export PROJECT_DIR="/home/your_netid/tfa-predictor"
+export PROJECT_DIR="/home/elp95/tfa-predictor"
 cd $PROJECT_DIR
 
 # Make necessary directories

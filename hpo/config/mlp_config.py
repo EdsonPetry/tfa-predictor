@@ -40,7 +40,7 @@ def get_slurm_config():
         'env_setup': 'source activate tfa-predictor', # Environment setup command
         
         # Additional SLURM options
-        'mail-user': 'your.email@rutgers.edu',
+        'mail-user': 'elp95@rutgers.edu',
         'mail-type': 'END,FAIL',
     }
 
