@@ -185,4 +185,4 @@ If you use TFA-Predictor in your research, please cite:
 ## Acknowledgments
 
 - Yang Lab at Rutgers University
-- Rutgers Office of Advanced Research Computing (OARC) for providing access to the Amarel cluster
+- Rutgers Pathways for Junior Scientist Program
