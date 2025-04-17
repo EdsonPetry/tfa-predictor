@@ -161,28 +161,11 @@ data/
         └── tfa-labels.csv
 ```
 
-## Contributing
-
-Contributions to TFA-Predictor are welcome! Please feel free to submit a Pull Request.
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Citation
-
-If you use TFA-Predictor in your research, please cite:
-
-```
-@software{tfa_predictor,
-  author = {Your Name},
-  title = {TFA-Predictor: Deep Learning Framework for Transcription Factor Activity Prediction},
-  year = {2023},
-  url = {https://github.com/your-username/tfa-predictor}
-}
-```
-
 ## Acknowledgments
 
 - Yang Lab at Rutgers University
-- Rutgers Office of Advanced Research Computing (OARC) for providing access to the Amarel cluster
+- Rutgers Pathways for Junior Scientist Program

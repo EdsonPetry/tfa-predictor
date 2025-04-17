@@ -6,7 +6,7 @@
 #SBATCH --job-name=hpo_manager
 #SBATCH --output=hpo_manager_%j.out
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --mail-user=elp95@rutgers.edu
+#SBATCH --mail-user=edson.petry@rutgers.edu
 
 # This script serves as the main entry point for running an HPO campaign
 # on the Amarel cluster. It starts a manager process that submits
