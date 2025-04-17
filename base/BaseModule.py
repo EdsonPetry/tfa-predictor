@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 from utils.HyperParameters import HyperParameters
 
@@ -21,6 +20,7 @@ class BaseModule(nn.Module, HyperParameters):
 
     def validation_step(self, batch):
         l = self.loss(self(*batch[:-1]), batch[-1])
+        return l
 
     def configure_optimizers(self):
         raise NotImplementedError

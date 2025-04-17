@@ -15,7 +15,6 @@ class BaseTrainer(HyperParameters):
 
     def prepare_model(self, model):
         model.trainer = self
-        model.board.xlim = [0, self.max_epochs]
         self.model = model
 
     def fit(self, model, data):
