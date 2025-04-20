@@ -17,6 +17,8 @@ echo "Job started at $(date)"
 echo "Running on host: $(hostname)"
 echo "SLURM job ID: $SLURM_JOB_ID"
 
+export PYTHONPATH=$PYTHONPATH:$PROJECT_DIR
+
 # Load necessary modules
 module purge
 module load python/3.10.4
