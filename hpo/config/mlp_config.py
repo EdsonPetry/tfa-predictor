@@ -48,8 +48,8 @@ def get_slurm_config():
 def get_hpo_config():
     """Define the configuration for the HPO campaign."""
     return {
-        'n_trials': 3,                     # Reduced trials for local testing
-        'max_concurrent_jobs': 2,          # Reduced concurrent jobs for local testing
+        'n_trials': 30,
+        'max_concurrent_jobs': 8,          
         'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp'),  # Results directory
         'checkpoint_interval': 1,          # Save checkpoint after each trial
         'seed': 42,                        # Random seed for reproducibility
