@@ -120,7 +120,10 @@ class Trainer(BaseTrainer):
             return r2_scores
 
 if __name__ == "__main__":
-    data = Data()
+    # For Amarel, use the correct data path
+    data_dir = '/home/elp95/tfa-predictor/data'
+    print(f"Using data directory: {data_dir}")
+    data = Data(data_dir=data_dir)
     model = MLP(input_size=3883, output_size=214)
     trainer = Trainer(max_epochs=100, visualize=True, save_plots=True)
     trainer.fit(model, data)

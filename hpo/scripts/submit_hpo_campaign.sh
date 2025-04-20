@@ -29,8 +29,12 @@ echo "PYTHONPATH set to: $PYTHONPATH"
 module purge
 module load python/3.10.4
 
-# Activate virtual environment
-source activate tfa-predictor
+# Set up debugging information
+echo "Python executable: $(which python)"
+echo "Python version: $(python --version)"
+echo "Current directory: $(pwd)"
+echo "Contents of data directory:"
+ls -la $PROJECT_DIR/data
 
 # Make necessary directories
 mkdir -p logs

@@ -37,10 +37,10 @@ def get_slurm_config():
         'mem': '16G',                 # Memory request
         'cpus_per_task': 4,           # CPU cores per task
         'gpus': 1,                    # Request 1 GPU per job
-        'env_setup': 'source activate tfa-predictor', # Environment setup command
+        'env_setup': 'module purge && module load python/3.10.4 && cd /home/elp95/tfa-predictor', # Environment setup command
         
         # Additional SLURM options
-        'mail-user': 'elp95@rutgers.edu',
+        'mail-user': 'edson.petry@rutgers.edu',
         'mail-type': 'END,FAIL',
     }
 
@@ -50,7 +50,7 @@ def get_hpo_config():
     return {
         'n_trials': 3,                     # Reduced trials for local testing
         'max_concurrent_jobs': 2,          # Reduced concurrent jobs for local testing
-        'output_dir': os.path.join('hpo_results', 'mlp'),  # Results directory
+        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp'),  # Results directory
         'checkpoint_interval': 1,          # Save checkpoint after each trial
         'seed': 42,                        # Random seed for reproducibility
     }

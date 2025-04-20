@@ -15,7 +15,7 @@ class Data(BaseDataModule):
     3. Splitting into train/validation sets
     4. Creating PyTorch DataLoaders
     """
-    def __init__(self, data_dir="/home/edson/Desktop/yang_lab/tfa-predictor/data", batch_size=32):
+    def __init__(self, data_dir="/home/elp95/tfa-predictor/data", batch_size=32):
         """Initialize the data module.
         
         Args:

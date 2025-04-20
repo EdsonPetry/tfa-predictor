@@ -50,6 +50,10 @@ def run_trial(config, output_path):
     # Create data loader
     data_config = {k: v for k, v in processed_config.items() 
                   if k in ['batch_size', 'data_dir']}
+    # Make sure data_dir is set properly for Amarel
+    if 'data_dir' not in data_config:
+        data_config['data_dir'] = '/home/elp95/tfa-predictor/data'
+    print(f"Using data directory: {data_config['data_dir']}")
     data = Data(**data_config)
     
     # Create model
