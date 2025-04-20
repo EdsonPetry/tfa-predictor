@@ -17,7 +17,13 @@ echo "Job started at $(date)"
 echo "Running on host: $(hostname)"
 echo "SLURM job ID: $SLURM_JOB_ID"
 
+# Set up environment variables
+export PROJECT_DIR="/home/elp95/tfa-predictor"
+cd $PROJECT_DIR
+
+# Add project directory to Python path
 export PYTHONPATH=$PYTHONPATH:$PROJECT_DIR
+echo "PYTHONPATH set to: $PYTHONPATH"
 
 # Load necessary modules
 module purge
@@ -26,16 +32,13 @@ module load python/3.10.4
 # Activate virtual environment
 source activate tfa-predictor
 
-# Set up environment variables
-export PROJECT_DIR="/home/elp95/tfa-predictor"
-cd $PROJECT_DIR
-
 # Make necessary directories
 mkdir -p logs
 mkdir -p hpo_results
 
 # Run the HPO campaign
 echo "Starting HPO campaign..."
-python -u hpo/main_hpo.py --config mlp_config
+# Use python module format to ensure proper imports
+python -m hpo.main_hpo --config mlp_config
 
 echo "HPO campaign completed at $(date)"
