@@ -19,7 +19,7 @@ echo "SLURM job ID: $SLURM_JOB_ID"
 
 # Load necessary modules
 module purge
-module load anaconda3/2021.11
+module load python/3.10.4
 
 # Activate virtual environment
 source activate tfa-predictor
