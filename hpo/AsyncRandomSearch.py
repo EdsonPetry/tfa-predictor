@@ -139,7 +139,12 @@ class AsyncRandomSearch(HPOSearcher):
                 if hasattr(domain, "rvs"):  # Distributions like uniform, loguniform
                     result[name] = domain.rvs()
                 elif isinstance(domain, list):  # Lists of options
-                    result[name] = np.random.choice(domain)
+                    if name == 'hidden_sizes' or any(isinstance(x, list) for x in domain):
+                        # For nested lists like hidden_sizes, use Python's random
+                        import random
+                        result[name] = random.choice(domain)
+                    else:
+                        result[name] = np.random.choice(domain)
                 else:  # Fixed values
                     result[name] = domain
 
