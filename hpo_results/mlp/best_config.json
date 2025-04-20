@@ -1,0 +1,18 @@
+{
+  "config": {
+    "input_size": 3883,
+    "output_size": 214,
+    "hidden_sizes": [
+      512,
+      256,
+      128
+    ],
+    "lr": 0.007969454818643928,
+    "weight_decay": 0.0002910635913133069,
+    "batch_size": 32,
+    "max_epochs": 50
+  },
+  "error": 0.15773205210765204,
+  "trial": 1,
+  "timestamp": "2025-04-17T10:38:35.471422"
+}

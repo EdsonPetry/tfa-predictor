@@ -15,6 +15,29 @@ from hpo.HPOSearcher import HPOSearcher
 from utils.HyperParameters import HyperParameters
 
 
+def numpy_to_python(obj):
+    """Convert NumPy types to Python native types for JSON serialization.
+    
+    Args:
+        obj: Object to convert
+    
+    Returns:
+        Object with NumPy types converted to Python native types
+    """
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {k: numpy_to_python(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [numpy_to_python(item) for item in obj]
+    else:
+        return obj
+
+
 class AsyncRandomSearch(HPOSearcher):
     """Asynchronous Random Search implementation for HPC clusters.
     
@@ -103,10 +126,16 @@ class AsyncRandomSearch(HPOSearcher):
             self.initial_config = None
             self.logger.info(f"Using initial configuration: {result}")
         else:
-            result = {
-                name: domain.rvs()
-                for name, domain in self.config_space.items()
-            }
+            result = {}
+            for name, domain in self.config_space.items():
+                # Handle different types of parameters
+                if hasattr(domain, 'rvs'):  # Distributions like uniform, loguniform
+                    result[name] = domain.rvs()
+                elif isinstance(domain, list):  # Lists of options
+                    result[name] = np.random.choice(domain)
+                else:  # Fixed values
+                    result[name] = domain
+            
             self.logger.debug(f"Sampled new configuration: {result}")
         
         return result
@@ -133,11 +162,13 @@ class AsyncRandomSearch(HPOSearcher):
             self.logger.info(f"New best configuration found! Error: {error}")
             self.logger.info(f"Best config: {config}")
             
-            # Save best config to file
+            # Save best config to file - convert NumPy types to Python native types
+            serializable_config = numpy_to_python(config)
+            
             with open(os.path.join(self.output_dir, 'best_config.json'), 'w') as f:
                 json.dump({
-                    'config': config,
-                    'error': error,
+                    'config': serializable_config,
+                    'error': float(error) if isinstance(error, np.number) else error,
                     'trial': len(self.completed_trials),
                     'timestamp': datetime.now().isoformat()
                 }, f, indent=2)
@@ -190,6 +221,10 @@ class AsyncRandomSearch(HPOSearcher):
     
     
     
+    
+    
+    
+    
     def _submit_job(self, config, job_script_template):
         """Submit a job locally (SLURM bypass for local testing).
         
@@ -207,10 +242,23 @@ class AsyncRandomSearch(HPOSearcher):
         job_dir = os.path.join(self.output_dir, 'jobs', f'trial_{trial_id}')
         os.makedirs(job_dir, exist_ok=True)
         
-        # Save configuration
+        # Save configuration - convert NumPy types to Python native types
         config_path = os.path.join(job_dir, 'config.json')
+        
+        # Convert NumPy types to Python native types for JSON serialization
+        serializable_config = {}
+        for key, value in config.items():
+            if isinstance(value, np.integer):
+                serializable_config[key] = int(value)
+            elif isinstance(value, np.floating):
+                serializable_config[key] = float(value)
+            elif isinstance(value, np.ndarray):
+                serializable_config[key] = value.tolist()
+            else:
+                serializable_config[key] = value
+        
         with open(config_path, 'w') as f:
-            json.dump(config, f, indent=2)
+            json.dump(serializable_config, f, indent=2)
         
         # Run the job directly instead of submitting to SLURM
         import subprocess
@@ -226,8 +274,8 @@ class AsyncRandomSearch(HPOSearcher):
             'job_dir': job_dir
         }
         
-        # Run the job in a separate process
-        cmd = f"python -m hpo.run_trial --config {config_path} --output {self.output_dir}/jobs/trial_{trial_id}/results.json"
+        # Run the job in a separate process with proper PYTHONPATH
+        cmd = f"PYTHONPATH={os.getcwd()} python -m hpo.run_trial --config {config_path} --output {self.output_dir}/jobs/trial_{trial_id}/results.json"
         
         # Run in background (this is just for demonstration - in practice, you'd want a more robust solution)
         subprocess.Popen(cmd, shell=True)
@@ -235,6 +283,10 @@ class AsyncRandomSearch(HPOSearcher):
         self.logger.info(f"Started local job {job_id} for trial {trial_id}")
         
         return job_id
+
+
+
+
 
 
     
@@ -292,12 +344,17 @@ class AsyncRandomSearch(HPOSearcher):
             
             # Copy results to the results directory
             output_path = os.path.join(self.output_dir, 'results', f'trial_{trial_id}.json')
+            
+            # Convert NumPy types to Python native types for JSON serialization
+            serializable_config = numpy_to_python(config)
+            serializable_additional_info = numpy_to_python(additional_info)
+            
             with open(output_path, 'w') as f:
                 json.dump({
                     'trial_id': trial_id,
-                    'config': config,
-                    'error': error,
-                    'additional_info': additional_info,
+                    'config': serializable_config,
+                    'error': float(error) if isinstance(error, np.number) else error,
+                    'additional_info': serializable_additional_info,
                     'job_id': job_id,
                     'submit_time': job_info['submit_time'],
                     'complete_time': datetime.now().isoformat()
@@ -366,8 +423,8 @@ class AsyncRandomSearch(HPOSearcher):
                            f"{len(self.active_jobs)} jobs active, best error: {self.best_error}, "
                            f"elapsed: {elapsed:.1f}s")
             
-            # Sleep before next check
-            time.sleep(30)
+            # Sleep before next check (using a shorter interval for local testing)
+            time.sleep(5)
         
         self.logger.info(f"Search completed, best error: {self.best_error}")
         self.logger.info(f"Best config: {self.best_config}")
