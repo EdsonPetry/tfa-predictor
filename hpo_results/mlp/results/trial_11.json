@@ -1,0 +1,25 @@
+{
+  "trial_id": 11,
+  "config": {
+    "input_size": 3883,
+    "output_size": 214,
+    "hidden_sizes": [
+      1024,
+      512,
+      256
+    ],
+    "lr": 0.00013492834268013249,
+    "weight_decay": 0.000790261954970823,
+    "batch_size": 64,
+    "max_epochs": 100
+  },
+  "error": 0.02933283912187273,
+  "additional_info": {
+    "training_time": 2553.140193939209,
+    "epochs": 100,
+    "final_train_loss": null
+  },
+  "job_id": "a1ce93b3-dc25-4dcf-8ac3-1ac855fc06b3",
+  "submit_time": "2025-04-20T14:02:49.427038",
+  "complete_time": "2025-04-20T14:45:40.396530"
+}

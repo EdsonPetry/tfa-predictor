@@ -1,4 +1,5 @@
 {
+  "trial_id": 26,
   "config": {
     "input_size": 3883,
     "output_size": 214,
@@ -13,6 +14,12 @@
     "max_epochs": 200
   },
   "error": 0.02305967617957365,
-  "trial": 27,
-  "timestamp": "2025-04-20T18:06:58.692222"
+  "additional_info": {
+    "training_time": 3779.817258834839,
+    "epochs": 200,
+    "final_train_loss": null
+  },
+  "job_id": "d4ef55d5-0ead-48d0-9397-37cd9b59b08a",
+  "submit_time": "2025-04-20T17:03:45.406367",
+  "complete_time": "2025-04-20T18:06:58.695661"
 }
