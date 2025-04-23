@@ -111,8 +111,14 @@ def plot_parallel_coordinates(df, save_path=None):
         df (pandas.DataFrame): DataFrame with trial data
         save_path (str, optional): Path to save the plot
     """
-    # Select columns that start with 'config_'
-    config_cols = [col for col in df.columns if col.startswith('config_')]
+    # Select columns that start with 'config_' but exclude list/dict type columns
+    config_cols = []
+    for col in df.columns:
+        if col.startswith('config_'):
+            # Check if column contains lists or dicts
+            if df[col].apply(lambda x: isinstance(x, (list, dict))).any():
+                continue
+            config_cols.append(col)
     
     if len(config_cols) > 0:
         # Create a new DataFrame with normalized values
@@ -149,9 +155,16 @@ def plot_error_vs_params(df, save_path=None):
         df (pandas.DataFrame): DataFrame with trial data
         save_path (str, optional): Path to save the plot
     """
-    # Select numeric config columns
-    config_cols = [col for col in df.columns 
-                  if col.startswith('config_') and df[col].dtype in [np.float64, np.int64]]
+    # Select numeric config columns, excluding lists/dicts
+    config_cols = []
+    for col in df.columns:
+        if col.startswith('config_'):
+            # Skip columns with list or dict values
+            if df[col].apply(lambda x: isinstance(x, (list, dict))).any():
+                continue
+            # Only include numeric columns
+            if df[col].dtype in [np.float64, np.int64]:
+                config_cols.append(col)
     
     if len(config_cols) > 0:
         # Create subplots

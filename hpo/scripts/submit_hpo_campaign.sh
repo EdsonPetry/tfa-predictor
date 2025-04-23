@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=main
-#SBATCH --time=48:00:00
+#SBATCH --time=72:00:00
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=4G
 #SBATCH --job-name=hpo_manager
