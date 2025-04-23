@@ -241,14 +241,14 @@ class AsyncRandomSearch(HPOSearcher):
         self.logger.info(f"Best error so far: {self.best_error}")
 
     def _submit_job(self, config, job_script_template):
-        """Submit a job locally (SLURM bypass for local testing).
+        """Submit a job to SLURM for Amarel HPC.
 
         Args:
             config (dict): Configuration to evaluate
             job_script_template (str): Template for SLURM job script
 
         Returns:
-            str: Job ID
+            str: SLURM Job ID
         """
         trial_id = self.trial_counter
         self.trial_counter += 1
@@ -259,65 +259,123 @@ class AsyncRandomSearch(HPOSearcher):
 
         # Save configuration - convert NumPy types to Python native types
         config_path = os.path.join(job_dir, "config.json")
-
-        # Convert NumPy types to Python native types for JSON serialization
-        serializable_config = {}
-        for key, value in config.items():
-            if isinstance(value, np.integer):
-                serializable_config[key] = int(value)
-            elif isinstance(value, np.floating):
-                serializable_config[key] = float(value)
-            elif isinstance(value, np.ndarray):
-                serializable_config[key] = value.tolist()
-            else:
-                serializable_config[key] = value
+        serializable_config = numpy_to_python(config)
 
         with open(config_path, "w") as f:
             json.dump(serializable_config, f, indent=2)
 
-        # Run the job directly instead of submitting to SLURM
+        # Create job script from template
+        job_script_path = os.path.join(job_dir, "job_script.sh")
+        
+        # Replace placeholders in the template
+        job_script = job_script_template.format(
+            config_path=config_path,
+            output_dir=self.output_dir,
+            trial_id=trial_id
+        )
+        
+        with open(job_script_path, "w") as f:
+            f.write(job_script)
+        
+        # Make script executable
+        os.chmod(job_script_path, 0o755)
+        
+        # Submit job to SLURM using sbatch
         import subprocess
-        import uuid
-
-        job_id = str(uuid.uuid4())
-
-        # Record job info
-        self.active_jobs[job_id] = {
-            "trial_id": trial_id,
-            "config": config,
-            "submit_time": datetime.now().isoformat(),
-            "job_dir": job_dir,
-        }
-
-        # Run the job in a separate process with proper PYTHONPATH
-        cmd = f"PYTHONPATH={os.getcwd()} python -m hpo.run_trial --config {config_path} --output {self.output_dir}/jobs/trial_{trial_id}/results.json"
-
-        # Run in background (this is just for demonstration - in practice, you'd want a more robust solution)
-        subprocess.Popen(cmd, shell=True)
-
-        self.logger.info(f"Started local job {job_id} for trial {trial_id}")
-
-        return job_id
+        
+        try:
+            # Submit the job script to SLURM using sbatch
+            cmd = ["sbatch", job_script_path]
+            result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+            
+            # Extract job ID from sbatch output (format: "Submitted batch job 12345")
+            job_id = result.stdout.strip().split()[-1]
+            
+            # Record job info
+            self.active_jobs[job_id] = {
+                "trial_id": trial_id,
+                "config": config,
+                "submit_time": datetime.now().isoformat(),
+                "job_dir": job_dir,
+                "slurm_job_id": job_id
+            }
+            
+            self.logger.info(f"Submitted SLURM job {job_id} for trial {trial_id}")
+            
+            return job_id
+            
+        except subprocess.CalledProcessError as e:
+            self.logger.error(f"Failed to submit job for trial {trial_id}: {e}")
+            self.logger.error(f"sbatch output: {e.stdout}")
+            self.logger.error(f"sbatch error: {e.stderr}")
+            
+            # Return a dummy job ID to keep track of this trial
+            dummy_job_id = f"failed-{uuid.uuid4()}"
+            self.active_jobs[dummy_job_id] = {
+                "trial_id": trial_id,
+                "config": config,
+                "submit_time": datetime.now().isoformat(),
+                "job_dir": job_dir,
+                "status": "FAILED_TO_SUBMIT"
+            }
+            
+            return dummy_job_id
 
     def _check_job_status(self, job_id):
-        """Check if job results exist (local version).
+        """Check the status of a SLURM job.
 
         Args:
-            job_id (str): Job ID
+            job_id (str): SLURM job ID
 
         Returns:
-            str: Job status
+            str: Job status (RUNNING, COMPLETED, FAILED, etc.)
         """
+        # Handle dummy jobs for failed submissions
+        if job_id.startswith("failed-"):
+            return "FAILED"
+            
         job_info = self.active_jobs[job_id]
         results_path = os.path.join(job_info["job_dir"], "results.json")
 
+        # First check if results file exists (job completed successfully)
         if os.path.exists(results_path):
             return "COMPLETED"
-        else:
-            # Wait a bit before checking again
-            import time
-
-            time.sleep(0.5)
+            
+        # Check SLURM job status using squeue
+        import subprocess
+        
+        try:
+            # Check if the job is still in the queue
+            cmd = ["squeue", "-j", job_id, "-h", "-o", "%T"]
+            result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+            
+            # If output is empty, job is no longer in queue (could be done or failed)
+            if not result.stdout.strip():
+                # Check sacct to get final job state
+                cmd = ["sacct", "-j", job_id, "-n", "-o", "State"]
+                result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+                status = result.stdout.strip().split()[0]
+                
+                # Map sacct status to our status values
+                if status in ["COMPLETED", "COMPLETING"]:
+                    # No results file but job completed - might be an error
+                    self.logger.warning(f"Job {job_id} completed according to SLURM, but no results file found")
+                    return "COMPLETED"
+                elif status in ["FAILED", "TIMEOUT", "CANCELLED", "NODE_FAIL"]:
+                    self.logger.warning(f"Job {job_id} failed with SLURM status: {status}")
+                    return status
+                else:
+                    return status
+            else:
+                # Job is still in queue with status from squeue output
+                return result.stdout.strip()
+                
+        except subprocess.CalledProcessError as e:
+            self.logger.error(f"Error checking status of job {job_id}: {e}")
+            self.logger.error(f"Command output: {e.stdout}")
+            self.logger.error(f"Command error: {e.stderr}")
+            
+            # If we can't determine status, assume it's still running
             return "RUNNING"
 
     def _process_completed_job(self, job_id):

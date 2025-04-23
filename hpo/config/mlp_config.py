@@ -37,7 +37,7 @@ def get_slurm_config():
         'mem': '16G',                 # Memory request
         'cpus_per_task': 4,           # CPU cores per task
         'gpus': 1,                    # Request 1 GPU per job
-        'env_setup': 'module purge && module load python/3.10.4 && cd /home/elp95/tfa-predictor', # Environment setup command
+        'env_setup': 'module purge && module load python/3.12.3 && cd /home/elp95/tfa-predictor', # Environment setup command
         
         # Additional SLURM options
         'mail-user': 'edson.petry@rutgers.edu',
