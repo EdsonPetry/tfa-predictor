@@ -52,7 +52,7 @@ def run_trial(config, output_path):
                   if k in ['batch_size', 'data_dir']}
     # Make sure data_dir is set properly for Amarel
     if 'data_dir' not in data_config:
-        data_config['data_dir'] = '/home/elp95/tfa-predictor/data'
+        data_config['data_dir'] = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data')
     print(f"Using data directory: {data_config['data_dir']}")
     data = Data(**data_config)
     
