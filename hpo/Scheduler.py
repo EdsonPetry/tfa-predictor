@@ -5,7 +5,7 @@ import logging
 from datetime import datetime
 
 from hpo.HPOScheduler import HPOScheduler
-from hpo.AsyncRandomSearch import AsyncRandomSearch
+from hpo.AsyncRandomSearch import AsyncRandomSearch, numpy_to_python
 
 
 class Scheduler(HPOScheduler):
@@ -169,11 +169,12 @@ class Scheduler(HPOScheduler):
         # Save final results
         output_file = os.path.join(output_dir, 'final_results.json')
         with open(output_file, 'w') as f:
+            # Convert NumPy types to Python native types for JSON serialization
             json.dump({
-                'best_config': results['best_config'],
-                'best_error': results['best_error'],
-                'n_trials': results['n_trials'],
-                'elapsed_time': results['elapsed_time'],
+                'best_config': numpy_to_python(results['best_config']),
+                'best_error': float(results['best_error']),
+                'n_trials': int(results['n_trials']),
+                'elapsed_time': float(results['elapsed_time']),
                 'timestamp': datetime.now().isoformat()
             }, f, indent=2)
         

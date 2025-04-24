@@ -12,7 +12,7 @@ import importlib
 import logging
 from datetime import datetime
 
-from hpo.AsyncRandomSearch import AsyncRandomSearch
+from hpo.AsyncRandomSearch import AsyncRandomSearch, numpy_to_python
 from hpo.Scheduler import Scheduler
 
 
@@ -115,7 +115,7 @@ def run_hpo_campaign(config_module):
         
         # Save final configuration to a easy-to-read format
         with open(os.path.join(output_dir, 'best_config_formatted.json'), 'w') as f:
-            json.dump(results['best_config'], f, indent=4)
+            json.dump(numpy_to_python(results['best_config']), f, indent=4)
         
         logger.info("HPO campaign completed successfully")
         logger.info(f"Best configuration: {results['best_config']}")
