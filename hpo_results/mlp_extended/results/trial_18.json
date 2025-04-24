@@ -1,0 +1,31 @@
+{
+  "trial_id": 18,
+  "config": {
+    "input_size": 3883,
+    "output_size": 214,
+    "hidden_sizes": [
+      3072,
+      1536,
+      768,
+      384
+    ],
+    "lr": 0.010506596753220968,
+    "weight_decay": 4.149795789891592e-05,
+    "batch_size": 32,
+    "max_epochs": 200,
+    "dropout_rate": 0.17814891903848745,
+    "activation": "leaky_relu",
+    "optimizer": "adam",
+    "learning_rate_schedule": "none",
+    "batch_norm": "true"
+  },
+  "error": 0.123684409118834,
+  "additional_info": {
+    "training_time": 1271.6507391929626,
+    "epochs": 200,
+    "final_train_loss": null
+  },
+  "job_id": "43168420",
+  "submit_time": "2025-04-24T14:46:26.507325",
+  "complete_time": "2025-04-24T15:08:12.274762"
+}

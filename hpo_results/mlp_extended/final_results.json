@@ -1,0 +1,24 @@
+{
+  "best_config": {
+    "input_size": 3883,
+    "output_size": 214,
+    "hidden_sizes": [
+      4096,
+      2048,
+      1024
+    ],
+    "lr": 6.0681743138581085e-05,
+    "weight_decay": 6.907016945696073e-06,
+    "batch_size": 256,
+    "max_epochs": 200,
+    "dropout_rate": 0.30139094101164926,
+    "activation": "selu",
+    "optimizer": "adam",
+    "learning_rate_schedule": "none",
+    "batch_norm": "false"
+  },
+  "best_error": 0.006004075830181439,
+  "n_trials": 100,
+  "elapsed_time": 6669.015901565552,
+  "timestamp": "2025-04-24T16:35:30.088285"
+}

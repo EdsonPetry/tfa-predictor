@@ -1,0 +1,23 @@
+{
+  "config": {
+    "input_size": 3883,
+    "output_size": 214,
+    "hidden_sizes": [
+      4096,
+      2048,
+      1024
+    ],
+    "lr": 6.0681743138581085e-05,
+    "weight_decay": 6.907016945696073e-06,
+    "batch_size": 256,
+    "max_epochs": 200,
+    "dropout_rate": 0.30139094101164926,
+    "activation": "selu",
+    "optimizer": "adam",
+    "learning_rate_schedule": "none",
+    "batch_norm": "false"
+  },
+  "error": 0.006004075830181439,
+  "trial": 67,
+  "timestamp": "2025-04-24T15:33:00.301328"
+}

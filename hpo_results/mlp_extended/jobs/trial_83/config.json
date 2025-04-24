@@ -1,0 +1,19 @@
+{
+  "input_size": 3883,
+  "output_size": 214,
+  "hidden_sizes": [
+    1024,
+    1024,
+    512,
+    256
+  ],
+  "lr": 0.0014406691541388027,
+  "weight_decay": 0.00042654102473476606,
+  "batch_size": 16,
+  "max_epochs": 50,
+  "dropout_rate": 0.06700761422532037,
+  "activation": "elu",
+  "optimizer": "sgd_momentum",
+  "learning_rate_schedule": "cosine",
+  "batch_norm": "true"
+}
