@@ -4,23 +4,22 @@
     "input_size": 3883,
     "output_size": 214,
     "hidden_sizes": [
-      2048,
-      1024,
       512,
-      256
+      256,
+      128
     ],
-    "lr": 0.0040215545266902904,
-    "weight_decay": 1.4096175149815848e-05,
+    "lr": 0.0016738085788752138,
+    "weight_decay": 1.9010245319870364e-05,
     "batch_size": 128,
-    "max_epochs": 50
+    "max_epochs": 100
   },
-  "error": 0.18621510018905005,
+  "error": 0.08040022632728021,
   "additional_info": {
-    "training_time": 1131.1260769367218,
-    "epochs": 50,
+    "training_time": 1476.7553396224976,
+    "epochs": 100,
     "final_train_loss": null
   },
-  "job_id": "7fc2fc7e-ae55-4a93-913a-3d0648c0f710",
-  "submit_time": "2025-04-20T16:20:27.922734",
-  "complete_time": "2025-04-20T16:39:29.635123"
+  "job_id": "43165692",
+  "submit_time": "2025-04-24T11:42:32.340206",
+  "complete_time": "2025-04-24T11:42:37.459515"
 }

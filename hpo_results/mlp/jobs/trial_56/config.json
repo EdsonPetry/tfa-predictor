@@ -1,0 +1,13 @@
+{
+  "input_size": 3883,
+  "output_size": 214,
+  "hidden_sizes": [
+    2048,
+    1024,
+    512
+  ],
+  "lr": 0.00013482936657421474,
+  "weight_decay": 3.219814322305043e-05,
+  "batch_size": 64,
+  "max_epochs": 200
+}
