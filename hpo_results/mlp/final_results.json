@@ -9,4 +9,11 @@
     ],
     "lr": 0.0005899741796710494,
     "weight_decay": 1.0762979285747974e-05,
-    "batch_size": 
+    "batch_size": 64,
+    "max_epochs": 200
+  },
+  "best_error": 0.023442814803936264,
+  "n_trials": 30,
+  "elapsed_time": 614013.8922924995,
+  "timestamp": "2025-04-24T13:11:10.293841"
+}

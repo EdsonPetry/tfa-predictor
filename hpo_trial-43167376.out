@@ -1,0 +1,111 @@
+Running on host hal0016.amarel.rutgers.edu
+Time is Thu Apr 24 13:11:24 EDT 2025
+Directory is /home/elp95/tfa-predictor
+SLURM job ID is 43167376
+Starting trial...
+Running trial with config: {'input_size': 3883, 'output_size': 214, 'hidden_sizes': [2048, 1024, 512], 'lr': 0.00869299151113955, 'weight_decay': 0.0003550304858128307, 'batch_size': 64, 'max_epochs': 100}
+Using data directory: /cache/home/elp95/tfa-predictor/data
+xprs_path: /cache/home/elp95/tfa-predictor/data/gene-xprs/processed/xprs-data.csv
+tfa_path: /cache/home/elp95/tfa-predictor/data/tfa/processed/tfa-labels.csv
+Epoch 1: Train Loss = 0.9514, Test Loss = 0.3427
+Epoch 2: Train Loss = 0.4618, Test Loss = 0.2479
+Epoch 3: Train Loss = 0.3544, Test Loss = 0.2079
+Epoch 4: Train Loss = 0.2985, Test Loss = 0.1435
+Epoch 5: Train Loss = 0.2553, Test Loss = 0.1523
+Epoch 6: Train Loss = 0.2569, Test Loss = 0.1820
+Epoch 7: Train Loss = 0.2499, Test Loss = 0.1451
+Epoch 8: Train Loss = 0.2448, Test Loss = 23.5417
+Epoch 9: Train Loss = 0.2416, Test Loss = 0.1364
+Epoch 10: Train Loss = 0.2396, Test Loss = 0.1663
+Epoch 11: Train Loss = 0.2341, Test Loss = 0.1421
+Epoch 12: Train Loss = 0.2312, Test Loss = 0.1254
+Epoch 13: Train Loss = 0.2334, Test Loss = 0.1233
+Epoch 14: Train Loss = 0.2321, Test Loss = 0.1174
+Epoch 15: Train Loss = 0.2247, Test Loss = 0.1463
+Epoch 16: Train Loss = 0.2343, Test Loss = 0.1074
+Epoch 17: Train Loss = 0.2282, Test Loss = 0.1435
+Epoch 18: Train Loss = 0.2360, Test Loss = 0.1570
+Epoch 19: Train Loss = 0.2283, Test Loss = 0.1269
+Epoch 20: Train Loss = 0.2303, Test Loss = 0.1286
+Epoch 21: Train Loss = 0.2343, Test Loss = 0.1305
+Epoch 22: Train Loss = 0.2253, Test Loss = 0.1264
+Epoch 23: Train Loss = 0.2412, Test Loss = 0.1216
+Epoch 24: Train Loss = 0.2350, Test Loss = 0.1256
+Epoch 25: Train Loss = 0.2261, Test Loss = 0.1544
+Epoch 26: Train Loss = 0.2316, Test Loss = 0.1370
+Epoch 27: Train Loss = 0.2383, Test Loss = 0.1359
+Epoch 28: Train Loss = 0.2324, Test Loss = 0.1505
+Epoch 29: Train Loss = 0.2380, Test Loss = 0.1467
+Epoch 30: Train Loss = 0.2425, Test Loss = 0.1448
+Epoch 31: Train Loss = 0.2340, Test Loss = 0.3214
+Epoch 32: Train Loss = 0.2513, Test Loss = 0.1513
+Epoch 33: Train Loss = 0.2295, Test Loss = 0.1173
+Epoch 34: Train Loss = 0.2368, Test Loss = 0.1464
+Epoch 35: Train Loss = 0.2307, Test Loss = 0.1627
+Epoch 36: Train Loss = 0.2407, Test Loss = 0.1314
+Epoch 37: Train Loss = 0.2352, Test Loss = 0.1658
+Epoch 38: Train Loss = 0.2390, Test Loss = 0.1225
+Epoch 39: Train Loss = 0.2333, Test Loss = 0.1232
+Epoch 40: Train Loss = 0.2452, Test Loss = 0.1629
+Epoch 41: Train Loss = 0.2441, Test Loss = 0.1416
+Epoch 42: Train Loss = 0.2419, Test Loss = 0.1383
+Epoch 43: Train Loss = 0.2480, Test Loss = 0.1675
+Epoch 44: Train Loss = 0.2470, Test Loss = 0.1811
+Epoch 45: Train Loss = 0.2403, Test Loss = 0.1371
+Epoch 46: Train Loss = 0.2465, Test Loss = 0.1687
+Epoch 47: Train Loss = 0.2399, Test Loss = 0.1541
+Epoch 48: Train Loss = 0.2429, Test Loss = 0.1124
+Epoch 49: Train Loss = 0.2379, Test Loss = 0.1586
+Epoch 50: Train Loss = 0.2461, Test Loss = 0.1601
+Epoch 51: Train Loss = 0.2402, Test Loss = 0.1838
+Epoch 52: Train Loss = 0.2380, Test Loss = 0.2134
+Epoch 53: Train Loss = 0.2411, Test Loss = 0.2319
+Epoch 54: Train Loss = 0.2504, Test Loss = 2.0704
+Epoch 55: Train Loss = 0.2477, Test Loss = 0.1500
+Epoch 56: Train Loss = 0.2466, Test Loss = 0.1404
+Epoch 57: Train Loss = 0.2358, Test Loss = 0.1466
+Epoch 58: Train Loss = 0.2319, Test Loss = 0.1287
+Epoch 59: Train Loss = 0.2430, Test Loss = 0.1741
+Epoch 60: Train Loss = 0.2429, Test Loss = 0.1124
+Epoch 61: Train Loss = 0.2431, Test Loss = 0.1747
+Epoch 62: Train Loss = 0.2391, Test Loss = 0.1592
+Epoch 63: Train Loss = 0.2433, Test Loss = 0.1399
+Epoch 64: Train Loss = 0.2474, Test Loss = 0.1657
+Epoch 65: Train Loss = 0.2483, Test Loss = 0.1378
+Epoch 66: Train Loss = 0.2492, Test Loss = 0.2073
+Epoch 67: Train Loss = 0.2454, Test Loss = 0.1593
+Epoch 68: Train Loss = 0.2386, Test Loss = 0.1209
+Epoch 69: Train Loss = 0.2347, Test Loss = 0.1311
+Epoch 70: Train Loss = 0.2424, Test Loss = 0.1394
+Epoch 71: Train Loss = 0.2375, Test Loss = 0.1491
+Epoch 72: Train Loss = 0.2398, Test Loss = 0.1585
+Epoch 73: Train Loss = 0.2534, Test Loss = 0.1318
+Epoch 74: Train Loss = 0.2381, Test Loss = 0.1203
+Epoch 75: Train Loss = 0.2489, Test Loss = 0.1405
+Epoch 76: Train Loss = 0.2418, Test Loss = 0.1463
+Epoch 77: Train Loss = 0.2491, Test Loss = 0.1714
+Epoch 78: Train Loss = 0.2348, Test Loss = 0.1566
+Epoch 79: Train Loss = 0.2485, Test Loss = 0.1363
+Epoch 80: Train Loss = 0.2503, Test Loss = 0.1740
+Epoch 81: Train Loss = 0.2473, Test Loss = 0.1253
+Epoch 82: Train Loss = 0.2440, Test Loss = 0.1383
+Epoch 83: Train Loss = 0.2489, Test Loss = 0.1624
+Epoch 84: Train Loss = 0.2608, Test Loss = 0.1395
+Epoch 85: Train Loss = 0.2390, Test Loss = 0.1450
+Epoch 86: Train Loss = 0.2506, Test Loss = 0.1269
+Epoch 87: Train Loss = 0.2352, Test Loss = 0.2047
+Epoch 88: Train Loss = 0.2548, Test Loss = 0.1828
+Epoch 89: Train Loss = 0.2468, Test Loss = 0.1729
+Epoch 90: Train Loss = 0.2516, Test Loss = 0.1443
+Epoch 91: Train Loss = 0.2551, Test Loss = 0.1446
+Epoch 92: Train Loss = 0.2489, Test Loss = 0.1354
+Epoch 93: Train Loss = 0.2426, Test Loss = 0.1663
+Epoch 94: Train Loss = 0.2525, Test Loss = 0.1757
+Epoch 95: Train Loss = 0.2515, Test Loss = 0.1588
+Epoch 96: Train Loss = 0.2386, Test Loss = 0.1516
+Epoch 97: Train Loss = 0.2484, Test Loss = 0.1777
+Epoch 98: Train Loss = 0.2467, Test Loss = 0.1995
+Epoch 99: Train Loss = 0.2547, Test Loss = 0.1503
+Epoch 100: Train Loss = 0.2534, Test Loss = 0.1519
+Trial completed in 291.17s with error: 0.1519
+Trial completed!

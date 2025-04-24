@@ -2,6 +2,7 @@
   "input_size": 3883,
   "output_size": 214,
   "hidden_sizes": [
+    2048,
     1024,
     512,
     256

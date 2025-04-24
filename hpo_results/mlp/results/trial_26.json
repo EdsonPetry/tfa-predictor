@@ -4,7 +4,6 @@
     "input_size": 3883,
     "output_size": 214,
     "hidden_sizes": [
-      2048,
       1024,
       512,
       256
@@ -14,13 +13,13 @@
     "batch_size": 128,
     "max_epochs": 200
   },
-  "error": 0.06227093500395616,
+  "error": 0.06849322405954202,
   "additional_info": {
-    "training_time": 2169.197517633438,
+    "training_time": 243.69712376594543,
     "epochs": 200,
     "final_train_loss": null
   },
-  "job_id": "43165697",
-  "submit_time": "2025-04-24T11:42:37.602305",
-  "complete_time": "2025-04-24T11:42:42.777812"
+  "job_id": "43167373",
+  "submit_time": "2025-04-24T13:11:00.108100",
+  "complete_time": "2025-04-24T13:11:05.271552"
 }

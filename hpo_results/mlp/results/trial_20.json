@@ -14,13 +14,13 @@
     "batch_size": 32,
     "max_epochs": 200
   },
-  "error": 0.032772094898280646,
+  "error": 0.05721167474985123,
   "additional_info": {
-    "training_time": 3490.861122608185,
-    "epochs": 50,
+    "training_time": 961.6207227706909,
+    "epochs": 200,
     "final_train_loss": null
   },
-  "job_id": "43165691",
-  "submit_time": "2025-04-24T11:42:32.307547",
-  "complete_time": "2025-04-24T11:42:37.452244"
+  "job_id": "43167367",
+  "submit_time": "2025-04-24T13:10:54.857027",
+  "complete_time": "2025-04-24T13:10:59.957014"
 }
