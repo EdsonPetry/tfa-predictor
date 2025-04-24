@@ -347,35 +347,61 @@ class AsyncRandomSearch(HPOSearcher):
         try:
             # Check if the job is still in the queue
             cmd = ["squeue", "-j", job_id, "-h", "-o", "%T"]
-            result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+            result = subprocess.run(cmd, capture_output=True, text=True)
             
-            # If output is empty, job is no longer in queue (could be done or failed)
-            if not result.stdout.strip():
-                # Check sacct to get final job state
-                cmd = ["sacct", "-j", job_id, "-n", "-o", "State"]
-                result = subprocess.run(cmd, check=True, capture_output=True, text=True)
-                status = result.stdout.strip().split()[0]
-                
-                # Map sacct status to our status values
-                if status in ["COMPLETED", "COMPLETING"]:
-                    # No results file but job completed - might be an error
-                    self.logger.warning(f"Job {job_id} completed according to SLURM, but no results file found")
+            # If command failed (exit status != 0) or output is empty, job is no longer in queue
+            if result.returncode != 0 or not result.stdout.strip():
+                # "Invalid job id" error likely means the job completed and was purged from SLURM's memory
+                if "Invalid job id" in result.stderr:
+                    # Mark this job as completed if it's no longer in SLURM's memory
+                    self.logger.info(f"Job {job_id} no longer in SLURM memory (likely completed)")
                     return "COMPLETED"
-                elif status in ["FAILED", "TIMEOUT", "CANCELLED", "NODE_FAIL"]:
-                    self.logger.warning(f"Job {job_id} failed with SLURM status: {status}")
-                    return status
-                else:
-                    return status
+                
+                try:
+                    # Try to check sacct to get final job state
+                    cmd = ["sacct", "-j", job_id, "-n", "-o", "State"]
+                    sacct_result = subprocess.run(cmd, capture_output=True, text=True)
+                    
+                    if sacct_result.returncode == 0 and sacct_result.stdout.strip():
+                        status = sacct_result.stdout.strip().split()[0]
+                        
+                        # Map sacct status to our status values
+                        if status in ["COMPLETED", "COMPLETING"]:
+                            # No results file but job completed - might be an error
+                            self.logger.warning(f"Job {job_id} completed according to SLURM, but no results file found")
+                            return "COMPLETED"
+                        elif status in ["FAILED", "TIMEOUT", "CANCELLED", "NODE_FAIL"]:
+                            self.logger.warning(f"Job {job_id} failed with SLURM status: {status}")
+                            return status
+                        else:
+                            return status
+                    else:
+                        # If sacct also fails, treat as completed to avoid infinite loop
+                        self.logger.warning(f"Unable to determine status for job {job_id}, assuming COMPLETED")
+                        return "COMPLETED"
+                except subprocess.SubprocessError:
+                    # If sacct command fails entirely, assume job is completed to avoid hanging
+                    self.logger.warning(f"Failed to run sacct for job {job_id}, assuming COMPLETED")
+                    return "COMPLETED"
             else:
                 # Job is still in queue with status from squeue output
                 return result.stdout.strip()
                 
-        except subprocess.CalledProcessError as e:
+        except subprocess.SubprocessError as e:
             self.logger.error(f"Error checking status of job {job_id}: {e}")
-            self.logger.error(f"Command output: {e.stdout}")
-            self.logger.error(f"Command error: {e.stderr}")
             
-            # If we can't determine status, assume it's still running
+            # If we can't determine status and job has been running for too long,
+            # consider marking it as "COMPLETED" to prevent it from blocking HPO progress
+            submission_time = datetime.fromisoformat(job_info["submit_time"])
+            current_time = datetime.now()
+            job_runtime = (current_time - submission_time).total_seconds()
+            
+            # If job has been running for more than 24 hours (86400 seconds), assume it's done
+            if job_runtime > 86400:
+                self.logger.warning(f"Job {job_id} has been running for {job_runtime/3600:.1f} hours without updates, marking as COMPLETED")
+                return "COMPLETED"
+            
+            # Otherwise, assume it's still running
             return "RUNNING"
 
     def _process_completed_job(self, job_id):
@@ -479,15 +505,43 @@ class AsyncRandomSearch(HPOSearcher):
             # Check status of active jobs
             jobs_to_remove = []
             for job_id in list(self.active_jobs.keys()):
-                status = self._check_job_status(job_id)
+                try:
+                    status = self._check_job_status(job_id)
 
-                if status in ["COMPLETED", "COMPLETING"]:
-                    if self._process_completed_job(job_id):
+                    if status in ["COMPLETED", "COMPLETING"]:
+                        if self._process_completed_job(job_id):
+                            jobs_to_remove.append(job_id)
+                        else:
+                            # If processing failed but job is completed, still remove it to avoid blocking
+                            self.logger.warning(f"Job {job_id} marked as completed but couldn't process results, removing from active jobs")
+                            jobs_to_remove.append(job_id)
+
+                    elif status in ["FAILED", "TIMEOUT", "CANCELLED", "NODE_FAIL"]:
+                        self.logger.warning(f"Job {job_id} failed with status {status}")
                         jobs_to_remove.append(job_id)
-
-                elif status in ["FAILED", "TIMEOUT", "CANCELLED", "NODE_FAIL"]:
-                    self.logger.warning(f"Job {job_id} failed with status {status}")
-                    jobs_to_remove.append(job_id)
+                except Exception as e:
+                    # Catch any exceptions during job status checking to prevent loop failure
+                    self.logger.error(f"Unexpected error checking job {job_id}: {e}")
+                    
+                    # Check if job is stuck (has been active for too long)
+                    try:
+                        submission_time = datetime.fromisoformat(self.active_jobs[job_id]["submit_time"])
+                        job_age = (datetime.now() - submission_time).total_seconds()
+                        
+                        # If job has been active for more than 48 hours, mark for removal
+                        if job_age > 172800:  # 48 hours in seconds
+                            self.logger.warning(f"Job {job_id} has been active for {job_age/3600:.1f} hours with errors, removing")
+                            jobs_to_remove.append(job_id)
+                    except Exception:
+                        # If even this fails, better to remove the job than risk infinite loop
+                        self.logger.warning(f"Job {job_id} has error checking status and age, removing")
+                        jobs_to_remove.append(job_id)
+            
+            # Remove jobs that are done or failed
+            for job_id in jobs_to_remove:
+                if job_id in self.active_jobs:
+                    self.logger.info(f"Removing job {job_id} from active jobs")
+                    del self.active_jobs[job_id]
 
             # Submit new jobs if slots are available
             while (
