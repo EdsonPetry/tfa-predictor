@@ -41,8 +41,8 @@ def get_config_space():
         'dropout_rate': uniform(0, 0.5),        # Dropout regularization
         'activation': ['relu', 'leaky_relu', 'elu', 'selu'], # Activation functions
         'optimizer': ['adam', 'adamw', 'sgd_momentum', 'rmsprop'], # Optimizer types
-        'learning_rate_schedule': [None, 'step', 'cosine', 'exponential'], # LR schedulers
-        'batch_norm': [True, False],            # Whether to use batch normalization
+        'learning_rate_schedule': ['none', 'step', 'cosine', 'exponential'], # LR schedulers
+        'batch_norm': ['true', 'false'],        # Whether to use batch normalization
     }
 
 # SLURM configuration for Amarel

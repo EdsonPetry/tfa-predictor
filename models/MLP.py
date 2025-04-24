@@ -47,7 +47,7 @@ class MLP(BaseModule):
         # Create the network architecture with fully connected layers
         # First layer: input to first hidden layer
         layers = [nn.Linear(input_size, hidden_sizes[0]), act_fn]
-        if batch_norm:
+        if batch_norm == True or batch_norm == 'true':
             layers.append(nn.BatchNorm1d(hidden_sizes[0]))
         if dropout_rate > 0:
             layers.append(nn.Dropout(dropout_rate))
@@ -56,7 +56,7 @@ class MLP(BaseModule):
         for i in range(len(hidden_sizes) - 1):
             layers.append(nn.Linear(hidden_sizes[i], hidden_sizes[i + 1]))
             layers.append(act_fn)
-            if batch_norm:
+            if batch_norm == True or batch_norm == 'true':
                 layers.append(nn.BatchNorm1d(hidden_sizes[i + 1]))
             if dropout_rate > 0:
                 layers.append(nn.Dropout(dropout_rate))
@@ -103,7 +103,7 @@ class MLP(BaseModule):
             optimizer = optim.Adam(self.parameters(), self.lr, weight_decay=self.weight_decay)
             
         # Return optimizer only if no learning rate schedule specified
-        if self.lr_schedule is None:
+        if self.lr_schedule is None or self.lr_schedule == 'none':
             return optimizer
             
         # Configure learning rate scheduler if specified
