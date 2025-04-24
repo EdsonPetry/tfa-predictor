@@ -91,7 +91,7 @@ class Scheduler(HPOScheduler):
         ]
         
         # Add GPU resources if needed
-        if slurm_settings['gpus'] > 0:
+        if 'gpus' in slurm_settings and slurm_settings['gpus'] > 0:
             header.append(f"#SBATCH --gres=gpu:{slurm_settings['gpus']}")
         
         # Add any additional SLURM settings

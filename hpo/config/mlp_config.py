@@ -36,7 +36,7 @@ def get_slurm_config():
         'time': '4:00:00',            # Time limit of 4 hours per job
         'mem': '16G',                 # Memory request
         'cpus_per_task': 4,           # CPU cores per task
-        'gpus': 1,                    # Request 1 GPU per job
+        # 'gpus': 1,                  # GPU request removed - not needed for MLP model
         
         # Additional SLURM options
         'mail-user': 'edson.petry@rutgers.edu',
