@@ -34,6 +34,8 @@ def numpy_to_python(obj):
         return {k: numpy_to_python(v) for k, v in obj.items()}
     elif isinstance(obj, list):
         return [numpy_to_python(item) for item in obj]
+    elif isinstance(obj, bool):
+        return bool(obj)  # Explicitly convert bool to ensure JSON serialization
     else:
         return obj
 
