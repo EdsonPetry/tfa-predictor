@@ -27,7 +27,7 @@ echo "PYTHONPATH set to: $PYTHONPATH"
 
 # Load necessary modules
 module purge
-module load python/3.12.3
+module load python/3.8.2
 
 # Set up debugging information
 echo "Python executable: $(which python)"
