@@ -66,7 +66,7 @@ def get_hpo_config():
     return {
         'n_trials': 100,                   # Increased number of trials for larger space
         'max_concurrent_jobs': 16,         # Increased concurrency
-        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended'),  # New results directory
+        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended2'),  # New results directory
         'checkpoint_interval': 5,          # Save checkpoint every 5 trials
         'seed': 42,                        # Random seed for reproducibility
     }
