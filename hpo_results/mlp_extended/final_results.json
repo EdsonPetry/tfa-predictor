@@ -18,7 +18,7 @@
     "batch_norm": "false"
   },
   "best_error": 0.006004075830181439,
-  "n_trials": 100,
-  "elapsed_time": 6669.015901565552,
-  "timestamp": "2025-04-24T16:35:30.088285"
+  "n_trials": 101,
+  "elapsed_time": 428432.88374352455,
+  "timestamp": "2025-04-29T13:44:53.945007"
 }

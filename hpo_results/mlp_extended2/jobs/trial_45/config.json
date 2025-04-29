@@ -1,0 +1,18 @@
+{
+  "input_size": 3883,
+  "output_size": 214,
+  "hidden_sizes": [
+    768,
+    512,
+    256
+  ],
+  "lr": 0.0015984152817505389,
+  "weight_decay": 1.2818193443923133e-06,
+  "batch_size": 16,
+  "max_epochs": 100,
+  "dropout_rate": 0.2713223173537883,
+  "activation": "relu",
+  "optimizer": "adamw",
+  "learning_rate_schedule": "step",
+  "batch_norm": "false"
+}

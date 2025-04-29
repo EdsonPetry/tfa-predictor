@@ -32,10 +32,10 @@ def get_config_space():
         ],
         
         # Optimization parameters
-        'lr': loguniform(5e-5, 2e-2),          # Extended learning rate range
-        'weight_decay': loguniform(1e-6, 1e-3), # Extended weight decay range
-        'batch_size': [16, 32, 64, 128, 256],   # More batch size options
-        'max_epochs': [50, 100, 150, 200, 300, 400, 500, 600], # More epoch options
+        'lr': loguniform(5e-5, 2e-2),
+        'weight_decay': loguniform(1e-6, 1e-3),
+        'batch_size': [16, 32, 64, 128, 256],  
+        'max_epochs': [50, 100, 150, 200, 300, 400, 500, 600],
         
         # Additional parameters
         'dropout_rate': uniform(0, 0.5),        # Dropout regularization
@@ -53,7 +53,6 @@ def get_slurm_config():
         'time': '4:00:00',            # Time limit of 4 hours per job
         'mem': '16G',                 # Memory request
         'cpus_per_task': 4,           # CPU cores per task
-        # 'gpus': 1,                  # GPU request removed - not needed for MLP model
         
         # Additional SLURM options
         'mail-user': 'edson.petry@rutgers.edu',
@@ -64,9 +63,9 @@ def get_slurm_config():
 def get_hpo_config():
     """Define the configuration for the HPO campaign."""
     return {
-        'n_trials': 200,                   # Increased number of trials for larger space
-        'max_concurrent_jobs': 32,         # Increased concurrency
-        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended3'),  # New results directory
+        'n_trials': 200,   
+        'max_concurrent_jobs': 16,
+        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended3'), 
         'checkpoint_interval': 5,          # Save checkpoint every 5 trials
         'seed': 42,                        # Random seed for reproducibility
     }
