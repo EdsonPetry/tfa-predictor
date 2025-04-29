@@ -4,7 +4,8 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=4G
 #SBATCH --job-name=hpo_manager
-#SBATCH --output=hpo_manager_%j.out
+#SBATCH --output=logs/hpo_manager_%j.out
+#SBATCH --error=logs/hpo_manager_%j.err
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=edson.petry@rutgers.edu
 
