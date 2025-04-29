@@ -27,6 +27,10 @@ def run_trial(config, output_path):
     Returns:
         float: Validation error (lower is better)
     """
+    # Set up logging to the logs directory
+    log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs')
+    os.makedirs(log_dir, exist_ok=True)
+    
     # Print configuration for debugging
     print(f"Running trial with config: {config}")
     start_time = time.time()
