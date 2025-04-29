@@ -27,11 +27,15 @@ def setup_logging(output_dir):
     """
     os.makedirs(output_dir, exist_ok=True)
     
+    # Create logs directory if it doesn't exist
+    logs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs')
+    os.makedirs(logs_dir, exist_ok=True)
+    
     logger = logging.getLogger('hpo_campaign')
     logger.setLevel(logging.INFO)
     
-    # Create file handler
-    log_file = os.path.join(output_dir, f'hpo_campaign_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log')
+    # Create file handler in logs directory
+    log_file = os.path.join(logs_dir, f'hpo_campaign_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log')
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(logging.INFO)
     
