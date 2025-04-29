@@ -35,7 +35,7 @@ def get_config_space():
         'lr': loguniform(5e-5, 2e-2),          # Extended learning rate range
         'weight_decay': loguniform(1e-6, 1e-3), # Extended weight decay range
         'batch_size': [16, 32, 64, 128, 256],   # More batch size options
-        'max_epochs': [50, 100, 150, 200, 300], # More epoch options
+        'max_epochs': [50, 100, 150, 200, 300, 400, 500, 600], # More epoch options
         
         # Additional parameters
         'dropout_rate': uniform(0, 0.5),        # Dropout regularization
