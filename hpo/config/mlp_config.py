@@ -39,7 +39,7 @@ def get_config_space():
         
         # Additional parameters
         'dropout_rate': uniform(0, 0.5),        # Dropout regularization
-        'activation': ['relu', 'leaky_relu', 'elu', 'selu'], # Activation functions
+        'activation': ['relu', 'leaky_relu', 'prelu', 'sigmoid', 'tanh', 'softmax', 'elu', 'selu'], # Activation functions
         'optimizer': ['adam', 'adamw', 'sgd_momentum', 'rmsprop'], # Optimizer types
         'learning_rate_schedule': ['none', 'step', 'cosine', 'exponential'], # LR schedulers
         'batch_norm': ['true', 'false'],        # Whether to use batch normalization
@@ -64,9 +64,9 @@ def get_slurm_config():
 def get_hpo_config():
     """Define the configuration for the HPO campaign."""
     return {
-        'n_trials': 100,                   # Increased number of trials for larger space
-        'max_concurrent_jobs': 16,         # Increased concurrency
-        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended'),  # New results directory
+        'n_trials': 200,                   # Increased number of trials for larger space
+        'max_concurrent_jobs': 32,         # Increased concurrency
+        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended3'),  # New results directory
         'checkpoint_interval': 5,          # Save checkpoint every 5 trials
         'seed': 42,                        # Random seed for reproducibility
     }
