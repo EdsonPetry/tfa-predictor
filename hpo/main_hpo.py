@@ -12,8 +12,9 @@ import importlib
 import logging
 from datetime import datetime
 
-from hpo.AsyncRandomSearch import AsyncRandomSearch, numpy_to_python
-from hpo.Scheduler import Scheduler
+from hpo.searchers.AsyncRandomSearch import AsyncRandomSearch
+from hpo.schedulers.Scheduler import Scheduler
+from hpo.utils.serialization import numpy_to_python
 
 
 def setup_logging(output_dir):
