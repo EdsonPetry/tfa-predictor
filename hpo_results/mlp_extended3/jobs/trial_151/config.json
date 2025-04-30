@@ -1,0 +1,18 @@
+{
+  "input_size": 3883,
+  "output_size": 214,
+  "hidden_sizes": [
+    1024,
+    512,
+    256
+  ],
+  "lr": 0.01098683250552156,
+  "weight_decay": 0.0004184756886195463,
+  "batch_size": 32,
+  "max_epochs": 200,
+  "dropout_rate": 0.3165490316787238,
+  "activation": "tanh",
+  "optimizer": "sgd_momentum",
+  "learning_rate_schedule": "step",
+  "batch_norm": "true"
+}

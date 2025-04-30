@@ -1,0 +1,10 @@
+{
+  "error": 0.11836573375122887,
+  "elapsed_time": 7705.680897951126,
+  "timestamp": "2025-04-29T22:07:24.755325",
+  "additional_info": {
+    "training_time": 7705.680897951126,
+    "epochs": 600,
+    "final_train_loss": null
+  }
+}
