@@ -6,13 +6,13 @@
     512,
     256
   ],
-  "lr": 0.00012276205337832406,
-  "weight_decay": 4.872526229872036e-06,
-  "batch_size": 128,
-  "max_epochs": 300,
-  "dropout_rate": 0.3600182682730372,
-  "activation": "elu",
+  "lr": 0.0027023396025076976,
+  "weight_decay": 5.9414625374545684e-05,
+  "batch_size": 64,
+  "max_epochs": 150,
+  "dropout_rate": 0.23610746258097465,
+  "activation": "tanh",
   "optimizer": "sgd_momentum",
-  "learning_rate_schedule": "cosine",
-  "batch_norm": "false"
+  "learning_rate_schedule": "step",
+  "batch_norm": "true"
 }

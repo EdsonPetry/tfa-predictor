@@ -3,16 +3,16 @@
   "output_size": 214,
   "hidden_sizes": [
     1024,
-    1024,
-    1024
+    512,
+    256
   ],
-  "lr": 0.0005520894375090704,
-  "weight_decay": 2.4323015184601963e-05,
-  "batch_size": 64,
+  "lr": 0.00016743855609639924,
+  "weight_decay": 0.00048673299445992047,
+  "batch_size": 16,
   "max_epochs": 200,
-  "dropout_rate": 0.45592620442148235,
-  "activation": "selu",
+  "dropout_rate": 0.28163778598819184,
+  "activation": "sigmoid",
   "optimizer": "adamw",
-  "learning_rate_schedule": "step",
+  "learning_rate_schedule": "none",
   "batch_norm": "true"
 }

@@ -7,13 +7,13 @@
     768,
     384
   ],
-  "lr": 9.63417532358065e-05,
-  "weight_decay": 0.0004824360943616178,
-  "batch_size": 256,
-  "max_epochs": 50,
-  "dropout_rate": 0.030758513119617525,
-  "activation": "tanh",
-  "optimizer": "rmsprop",
-  "learning_rate_schedule": "step",
+  "lr": 8.140374998788102e-05,
+  "weight_decay": 1.7968554542843696e-06,
+  "batch_size": 64,
+  "max_epochs": 600,
+  "dropout_rate": 0.18713539787806016,
+  "activation": "relu",
+  "optimizer": "adamw",
+  "learning_rate_schedule": "exponential",
   "batch_norm": "true"
 }

@@ -1,0 +1,20 @@
+{
+  "input_size": 3883,
+  "output_size": 214,
+  "hidden_sizes": [
+    2048,
+    1024,
+    512,
+    256,
+    128
+  ],
+  "lr": 0.00018736494830831905,
+  "weight_decay": 3.6250565548803078e-06,
+  "batch_size": 64,
+  "max_epochs": 600,
+  "dropout_rate": 0.17506262958336505,
+  "activation": "tanh",
+  "optimizer": "adamw",
+  "learning_rate_schedule": "cosine",
+  "batch_norm": "true"
+}

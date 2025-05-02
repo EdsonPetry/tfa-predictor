@@ -7,13 +7,13 @@
     768,
     384
   ],
-  "lr": 0.002299082927096052,
-  "weight_decay": 0.00018928122440471716,
-  "batch_size": 256,
-  "max_epochs": 400,
-  "dropout_rate": 0.31861578989474343,
-  "activation": "selu",
-  "optimizer": "adam",
-  "learning_rate_schedule": "step",
+  "lr": 0.0005795489179735745,
+  "weight_decay": 3.3104189563245155e-06,
+  "batch_size": 16,
+  "max_epochs": 500,
+  "dropout_rate": 0.12512144908229766,
+  "activation": "softmax",
+  "optimizer": "adamw",
+  "learning_rate_schedule": "exponential",
   "batch_norm": "true"
 }

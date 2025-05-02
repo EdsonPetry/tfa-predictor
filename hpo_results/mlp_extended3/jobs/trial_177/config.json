@@ -2,17 +2,17 @@
   "input_size": 3883,
   "output_size": 214,
   "hidden_sizes": [
-    4096,
-    2048,
-    1024
+    1024,
+    512,
+    256
   ],
-  "lr": 0.010656369771867772,
-  "weight_decay": 0.0003805225945337635,
-  "batch_size": 64,
-  "max_epochs": 50,
-  "dropout_rate": 0.1955848830401899,
-  "activation": "prelu",
-  "optimizer": "rmsprop",
-  "learning_rate_schedule": "none",
+  "lr": 0.005394475172574595,
+  "weight_decay": 2.189746324513344e-06,
+  "batch_size": 256,
+  "max_epochs": 100,
+  "dropout_rate": 0.4871241042672051,
+  "activation": "softmax",
+  "optimizer": "sgd_momentum",
+  "learning_rate_schedule": "step",
   "batch_norm": "true"
 }

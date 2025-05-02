@@ -2,16 +2,17 @@
   "input_size": 3883,
   "output_size": 214,
   "hidden_sizes": [
-    1024,
-    256
+    512,
+    256,
+    128
   ],
-  "lr": 9.263256511720828e-05,
-  "weight_decay": 4.0685911909348524e-05,
+  "lr": 0.012015724710323748,
+  "weight_decay": 0.0003549079546095971,
   "batch_size": 128,
-  "max_epochs": 300,
-  "dropout_rate": 0.06374433116599121,
-  "activation": "selu",
+  "max_epochs": 100,
+  "dropout_rate": 0.047705058245205656,
+  "activation": "elu",
   "optimizer": "sgd_momentum",
-  "learning_rate_schedule": "none",
+  "learning_rate_schedule": "step",
   "batch_norm": "false"
 }

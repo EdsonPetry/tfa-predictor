@@ -3,15 +3,16 @@
   "output_size": 214,
   "hidden_sizes": [
     1024,
-    256
+    1024,
+    1024
   ],
-  "lr": 9.47562476157481e-05,
-  "weight_decay": 0.0003566008549404993,
+  "lr": 0.005521345951573618,
+  "weight_decay": 3.972110727381911e-06,
   "batch_size": 128,
-  "max_epochs": 200,
-  "dropout_rate": 0.20425914646795845,
+  "max_epochs": 600,
+  "dropout_rate": 0.23338144662398996,
   "activation": "tanh",
-  "optimizer": "rmsprop",
+  "optimizer": "sgd_momentum",
   "learning_rate_schedule": "cosine",
   "batch_norm": "true"
 }

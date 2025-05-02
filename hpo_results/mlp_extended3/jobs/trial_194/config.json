@@ -4,15 +4,16 @@
   "hidden_sizes": [
     2048,
     1024,
-    512
+    512,
+    256
   ],
-  "lr": 6.031432926905257e-05,
-  "weight_decay": 0.00015624646517788882,
-  "batch_size": 256,
-  "max_epochs": 150,
-  "dropout_rate": 0.48226023613510427,
-  "activation": "prelu",
-  "optimizer": "adam",
-  "learning_rate_schedule": "none",
+  "lr": 0.00011149650328964437,
+  "weight_decay": 1.0990460620183685e-06,
+  "batch_size": 128,
+  "max_epochs": 50,
+  "dropout_rate": 0.26717313751473154,
+  "activation": "tanh",
+  "optimizer": "adamw",
+  "learning_rate_schedule": "cosine",
   "batch_norm": "true"
 }

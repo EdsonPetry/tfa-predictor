@@ -1,0 +1,30 @@
+{
+  "trial_id": 200,
+  "config": {
+    "input_size": 3883,
+    "output_size": 214,
+    "hidden_sizes": [
+      1024,
+      1024,
+      1024
+    ],
+    "lr": 0.00035240950563706817,
+    "weight_decay": 5.899182292623039e-05,
+    "batch_size": 64,
+    "max_epochs": 600,
+    "dropout_rate": 0.2276100745409006,
+    "activation": "selu",
+    "optimizer": "adam",
+    "learning_rate_schedule": "step",
+    "batch_norm": "false"
+  },
+  "error": 0.015903763388368217,
+  "additional_info": {
+    "training_time": 943.4666457176208,
+    "epochs": 600,
+    "final_train_loss": null
+  },
+  "job_id": "43299800",
+  "submit_time": "2025-04-30T17:51:21.856633",
+  "complete_time": "2025-04-30T18:07:51.982221"
+}

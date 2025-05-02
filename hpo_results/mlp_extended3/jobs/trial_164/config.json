@@ -2,17 +2,17 @@
   "input_size": 3883,
   "output_size": 214,
   "hidden_sizes": [
-    4096,
-    2048,
-    1024
+    512,
+    256,
+    128
   ],
-  "lr": 0.0011438685324419678,
-  "weight_decay": 8.583016588214051e-05,
-  "batch_size": 64,
-  "max_epochs": 200,
-  "dropout_rate": 0.060283442888639405,
-  "activation": "leaky_relu",
-  "optimizer": "sgd_momentum",
-  "learning_rate_schedule": "none",
-  "batch_norm": "true"
+  "lr": 0.0008530450281792707,
+  "weight_decay": 3.308305521268992e-06,
+  "batch_size": 256,
+  "max_epochs": 500,
+  "dropout_rate": 0.024029462098516863,
+  "activation": "softmax",
+  "optimizer": "adam",
+  "learning_rate_schedule": "exponential",
+  "batch_norm": "false"
 }

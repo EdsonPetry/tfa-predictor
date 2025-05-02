@@ -4,15 +4,16 @@
   "hidden_sizes": [
     1024,
     1024,
-    1024
+    512,
+    256
   ],
-  "lr": 0.0021144382949815554,
-  "weight_decay": 1.3588697858738468e-05,
-  "batch_size": 64,
-  "max_epochs": 100,
-  "dropout_rate": 0.14702233961048577,
+  "lr": 0.00015286299273055805,
+  "weight_decay": 1.3253342600066535e-06,
+  "batch_size": 128,
+  "max_epochs": 200,
+  "dropout_rate": 0.3387821809211412,
   "activation": "prelu",
-  "optimizer": "sgd_momentum",
-  "learning_rate_schedule": "step",
-  "batch_norm": "false"
+  "optimizer": "adamw",
+  "learning_rate_schedule": "cosine",
+  "batch_norm": "true"
 }

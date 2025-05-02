@@ -4,18 +4,19 @@
     "input_size": 3883,
     "output_size": 214,
     "hidden_sizes": [
+      2048,
       1024,
-      512,
-      256
+      1024,
+      512
     ],
-    "lr": 0.019922680156659676,
-    "weight_decay": 4.6496444486579674e-05,
-    "batch_size": 32,
-    "max_epochs": 500,
-    "dropout_rate": 0.01697298929289942,
+    "lr": 6.654726804393378e-05,
+    "weight_decay": 4.990127377030908e-05,
+    "batch_size": 64,
+    "max_epochs": 300,
+    "dropout_rate": 0.06008232390282109,
     "activation": "tanh",
-    "optimizer": "sgd_momentum",
-    "learning_rate_schedule": "none",
+    "optimizer": "adamw",
+    "learning_rate_schedule": "exponential",
     "batch_norm": "true"
   },
   "error": 0.12524765871819996,
@@ -24,7 +25,7 @@
     "epochs": 500,
     "final_train_loss": null
   },
-  "job_id": "43287592",
-  "submit_time": "2025-04-29T22:59:54.728831",
-  "complete_time": "2025-04-29T23:14:39.923919"
+  "job_id": "43292703",
+  "submit_time": "2025-04-30T10:03:00.134135",
+  "complete_time": "2025-04-30T10:03:05.616125"
 }

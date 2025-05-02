@@ -65,7 +65,7 @@ def get_hpo_config():
     return {
         'n_trials': 200,   
         'max_concurrent_jobs': 16,
-        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended3'), 
+        'output_dir': os.path.join('/home/elp95/tfa-predictor/hpo_results', 'mlp_extended4'), 
         'checkpoint_interval': 5,          # Save checkpoint every 5 trials
         'seed': 42,                        # Random seed for reproducibility
     }
