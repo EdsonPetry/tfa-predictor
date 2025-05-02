@@ -1,0 +1,74 @@
+from utils.HyperParameters import HyperParameters
+from hpo.base.HPOScheduler import HPOScheduler
+import time
+import numpy as np
+
+class HPOTuner(HyperParameters):
+    """Base tuner class for hyperparameter optimization.
+    
+    This class manages the overall hyperparameter optimization process,
+    using a scheduler to suggest configurations and running an objective
+    function to evaluate them.
+    """
+    
+    def __init__(self, scheduler: HPOScheduler, objective: callable):
+        """Initialize the tuner.
+        
+        Args:
+            scheduler (HPOScheduler): The scheduler to use for obtaining configurations
+            objective (callable): The objective function to evaluate configurations
+        """
+        self.save_hyperparameters()
+        # Bookeeping results for plotting
+        self.incumbent = None
+        self.incumbent_error = None
+        self.incumbent_trajectory = []
+        self.cumulative_runtime = []
+        self.current_runtime = 0
+        self.records = []
+
+    def run(self, number_of_trials):
+        """Run the hyperparameter optimization process.
+        
+        Args:
+            number_of_trials (int): Number of trials to run
+            
+        Returns:
+            dict: Results of the optimization process
+        """
+        for i in range(number_of_trials):
+            start_time = time.time()
+            config = self.scheduler.suggest()
+            print(f"Trial {i}: config = {config}")
+            error = self.objective(**config)
+            
+            # Handle different types of errors (tensor, numpy, float)
+            if hasattr(error, 'cpu') and hasattr(error, 'detach'):
+                error = float(error.cpu().detach().numpy())
+            elif isinstance(error, np.ndarray):
+                error = float(error)
+            
+            self.scheduler.update(config, error)
+            runtime = time.time() - start_time
+            self.bookkeeping(config, error, runtime)
+            print(f"    error = {error}, runtime = {runtime}")
+    
+    def bookkeeping(self, config: dict, error: float, runtime: float):
+        """Keep track of optimization results.
+        
+        Args:
+            config (dict): The configuration that was evaluated
+            error (float): The validation error/score
+            runtime (float): The runtime of the evaluation
+        """
+        self.records.append({"config": config, "error": error, "runtime": runtime})
+        # Check if the last hyperparameter configuration performs better
+        # than the incumbent
+        if self.incumbent is None or self.incumbent_error > error:
+            self.incumbent = config
+            self.incumbent_error = error
+        # Add current best observed performance to the optimization trajectory
+        self.incumbent_trajectory.append(self.incumbent_error)
+        # Update runtime
+        self.current_runtime += runtime
+        self.cumulative_runtime.append(self.current_runtime)
